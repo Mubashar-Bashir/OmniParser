@@ -1,4 +1,5 @@
-# OmniParser: Screen Parsing tool for Pure Vision Based GUI Agent
+conda create -n "omni" python==3.12
+conda activate omni# OmniParser: Screen Parsing tool for Pure Vision Based GUI Agent
 
 <p align="center">
   <img src="imgs/logo.png" alt="Logo">
@@ -22,44 +23,32 @@
 - [2024/09] OmniParser achieves the best performance on [Windows Agent Arena](https://microsoft.github.io/WindowsAgentArena/)! 
 
 ## Install 
-First clone the repo, and then install environment:
-```python
+First clone the repo, and then install the environment:
+```bash
 cd OmniParser
 conda create -n "omni" python==3.12
 conda activate omni
 pip install -r requirements.txt
 ```
 
-Ensure you have the V2 weights downloaded in weights folder (ensure caption weights folder is called icon_caption_florence). If not download them with:
+Ensure you have the V2 weights downloaded in the weights folder (ensure the caption weights folder is called icon_caption_florence). If not, download them with:
+```bash
+# download the model checkpoints to local directory OmniParser/weights/
+for f in icon_detect/{train_args.yaml,model.pt,model.yaml} icon_caption/{config.json,generation_config.json,model.safetensors}; do huggingface-cli download microsoft/OmniParser-v2.0 "$f" --local-dir weights; done
+mv weights/icon_caption weights/icon_caption_florence
 ```
-   # download the model checkpoints to local directory OmniParser/weights/
-   for f in icon_detect/{train_args.yaml,model.pt,model.yaml} icon_caption/{config.json,generation_config.json,model.safetensors}; do huggingface-cli download microsoft/OmniParser-v2.0 "$f" --local-dir weights; done
-   mv weights/icon_caption weights/icon_caption_florence
-```
-
-<!-- ## [deprecated]
-Then download the model ckpts files in: https://huggingface.co/microsoft/OmniParser, and put them under weights/, default folder structure is: weights/icon_detect, weights/icon_caption_florence, weights/icon_caption_blip2. 
-
-For v1: 
-convert the safetensor to .pt file. 
-```python
-python weights/convert_safetensor_to_pt.py
-
-For v1.5: 
-download 'model_v1_5.pt' from https://huggingface.co/microsoft/OmniParser/tree/main/icon_detect_v1_5, make a new dir: weights/icon_detect_v1_5, and put it inside the folder. No weight conversion is needed. 
-``` -->
 
 ## Examples:
 We put together a few simple examples in the demo.ipynb. 
 
 ## Gradio Demo
-To run gradio demo, simply run:
-```python
+To run the Gradio demo, simply run:
+```bash
 python gradio_demo.py
 ```
 
 ## Model Weights License
-For the model checkpoints on huggingface model hub, please note that icon_detect model is under AGPL license since it is a license inherited from the original yolo model. And icon_caption_blip2 & icon_caption_florence is under MIT license. Please refer to the LICENSE file in the folder of each model: https://huggingface.co/microsoft/OmniParser.
+For the model checkpoints on the Huggingface model hub, please note that the icon_detect model is under the AGPL license since it is a license inherited from the original yolo model. And icon_caption_blip2 & icon_caption_florence are under the MIT license. Please refer to the LICENSE file in the folder of each model: https://huggingface.co/microsoft/OmniParser.
 
 ## 📚 Citation
 Our technical report can be found [here](https://arxiv.org/abs/2408.00203).
